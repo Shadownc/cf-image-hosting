@@ -1,0 +1,55 @@
+@media (max-width: 600px) {
+  .card {
+    margin: 20px;
+    padding: 10px;
+    border: none !important;
+  }
+}
+
+.full-window {
+  width: 100%;
+  height: 100vh;
+  overflow: auto;
+}
+
+.container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+}
+
+#upload {
+  position: relative;
+  overflow: hidden;
+  width: 200px;
+}
+
+#upload input[type="file"] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  height: 100%;
+}
+
+#uploadStatus .alert {
+  padding: 6px;
+}
+
+#imageUrl {
+  border-color: #6e757c;
+}
+
+.copy-btn {
+  color: #6e757c;
+}
+
+.copy-btn:focus {
+  box-shadow: none !important;
+}
+
+.spinner-grow-sm {
+  margin-right: 10px;
+  position: relative;
+  top: -2px;
+}
