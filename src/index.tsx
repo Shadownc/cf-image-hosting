@@ -29,6 +29,16 @@ app.get("/file/:name", async (c) => {
   });
 });
 
+app.get("/list", async (c) => {
+  console.log(c.env)
+  const value = await c.env.img_url.list();
+  console.log(value,'-----');
+  return c.json(
+    { code: 200, message: value },
+    200,
+  );
+})
+
 app.onError((error, c) => {
   return c.json(
     { code: 500, message: error?.message || "Server internal error" },

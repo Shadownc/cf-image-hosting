@@ -2,5 +2,10 @@ name = "cf-image-hosting"
 pages_build_output_dir = "./dist"
 compatibility_date = "2024-05-12"
 
+[[kv_namespaces]]
+binding = "img_url"
+id = "e60b345ea6ec4200aa04b0501bb4c992"
+
 [env.production.vars]
 API_HOST = "https://telegra.ph"
+img_kv = "img_url"
