@@ -1,3 +1,4 @@
+## 魔改了旧版的`cf-image-hosting`,接入了kv存储新增后台预览、删除功能
 ## Cloudflare Image Hosting
 
 Free unlimited image hosting on Telegraph, deployed on Cloudflare.
@@ -11,7 +12,7 @@ Free unlimited image hosting on Telegraph, deployed on Cloudflare.
 
 ### Screenshots
 
-<img src="https://images.mingming.dev/file/a880a86209e32ccec4f24.png" width="700" />
+<img src="https://images.100769.xyz/file/7ebc4b5e4d57c5d315a9f.png" width="700" />
 
 ### Development
 
@@ -30,9 +31,8 @@ npm run deploy
 
 - [x] Redesign UI
 - [x] Support compress image
-- [ ] Save history of upload
-- [ ] Support set whitelist to prevent abuse
-- [ ] Support copy multiple formats, such as Markdown
+
+
 
 ### FAQ
 
@@ -40,7 +40,7 @@ npm run deploy
   <summary>How to deploy to Cloudflare?</summary>
 
 ```bash
-$ git clone https://github.com/ifyour/cf-image-hosting.git
+$ git clone https://github.com/Shadownc/cf-image-hosting.git
 $ cd cf-image-hosting
 $ npm run install && npm run deploy
 ```
@@ -56,3 +56,7 @@ $ npm run install && npm run deploy
 ### License
 
 MIT
+
+### Thanks
+[ifyour](https://github.com/ifyour/cf-image-hosting)
+[cloudflare](https://dash.cloudflare.com/)
