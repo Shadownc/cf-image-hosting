@@ -1,7 +1,9 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
+import jwt from '@tsndr/cloudflare-worker-jwt'
 import { Home } from "./Home";
 import { Admin } from "./Admin";
+import { Login } from "./Login";
 
 async function randomString(len) { //随机链接生成
   len = len || 6;
@@ -14,10 +16,24 @@ async function randomString(len) { //随机链接生成
   return result;
 }
 
-const app = new Hono<{ Bindings: { API_HOST: string } }>();
+const app = new Hono<{ Bindings: { API_HOST: string, USERNAME: string, PASSWORD: string } }>();
 
 app.get("/", (c) => c.html(<Home />));
 app.get("/admin", (c) => c.html(<Admin />));
+app.get("/login", (c) => c.html(<Login />));
+
+app.post("/login", async (c) => {
+  const body = await c.req.parseBody();
+  const username = body.get("username");
+  const password = body.get("password");
+
+  if (username === c.env.USERNAME && password === c.env.PASSWORD) {
+    // const token = await sign(payload, secret)
+    return c.json({ token });
+  } else {
+    return c.html(<Login />);
+  }
+});
 
 app.post("/upload", cors(), async (c) => {
   const body = await c.req.parseBody();
@@ -49,11 +65,16 @@ app.get("/list", async (c) => {
   const value = await c.env.file_url.list();
   for (const item of value.keys) {
     const info = await c.env.file_url.get(item.name);
-    data.push({ url: info });
+    data.push({ key: item.name, url: info });
   }
   return c.json({ code: 200, data }, 200);
 });
-
+app.get("/del/:key", async (c) => {
+  const value = await c.env.file_url.delete(c.req.param("key"));
+  if (!value) {
+    return c.json({ code: 200, message: '删除成功' }, 200);
+  }
+});
 
 app.onError((error, c) => {
   return c.json(

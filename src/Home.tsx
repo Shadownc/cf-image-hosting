@@ -19,9 +19,9 @@ export function Home() {
       <body>
         <div className="full-window" ondragover="event.preventDefault()">
           <div className="container card">
-            <h3 className="text-center">Telegraph Image Hosting</h3>
+            <h3 className="text-center">IMyself Images Service</h3>
             <p className="text-center text-muted">
-              Free & Unlimited Image Hosting
+              联系QQ:365172043
             </p>
             <button
               id="upload"
@@ -31,10 +31,7 @@ export function Home() {
             >
               <span className="spinner-grow spinner-grow-sm d-none"></span>
               <span className="upload-text">
-                Drag & Drop your files or{" "}
-                <u>
-                  <i>Browse</i>
-                </u>
+                拖拽或直接截图并粘贴或点击上传
               </span>
               <input
                 id="fileInput"
@@ -50,7 +47,7 @@ export function Home() {
             ></div>
             <a
               className="text-center text-muted"
-              href="https://github.com/ifyour/cf-image-hosting"
+              href="https://github.com/Shadownc/cf-image-hosting"
               target="_blank"
             >
               GitHub

@@ -10,6 +10,7 @@
   width: 100%;
   height: 100vh;
   overflow: auto;
+  background-image: linear-gradient(to top, #fad0c4 0%, #fad0c4 1%, #ffd1ff 100%);
 }
 
 .container {
