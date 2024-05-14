@@ -26,3 +26,11 @@ async function fetchLogin() {
         console.error('Error:', error);
     }
 }
+
+
+const pwdInput = document.getElementById('password');
+pwdInput.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    fetchLogin()
+  }
+});
