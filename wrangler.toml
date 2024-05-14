@@ -1,7 +1,6 @@
 name = "cf-image-hosting"
 pages_build_output_dir = "./dist"
 compatibility_date = "2024-05-12"
-main = "src/index.tsx"
 minify = true
 kv_namespaces = [
   { binding = "file_url", id = "b2f90f8da0d3434bbf0743ed8857743a"}

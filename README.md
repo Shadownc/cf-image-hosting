@@ -81,7 +81,6 @@ $ npm run install && npm run deploy
   中文翻译：
   如果是新创建的令牌，请选择编辑 Cloudflare Workers模板，如果您已有其他令牌，请确保该令牌具有相应的权限（否，令牌权限不会在 cloudflare 页面和 cloudflare Workers 之间共享）。
   然后转到您的 Github 存储库设置仪表板：Settings->Secrets and variables->Actions->Repository secrets，并添加一个名为 的新密钥CLOUDFLARE_API_TOKEN。
-  注意：如果你之前自己发布过Workers,Github Action自动部署会重新生成一个Workers!!!该项目内暂停了Github Action自动部署！！！
 
 </details>
 
