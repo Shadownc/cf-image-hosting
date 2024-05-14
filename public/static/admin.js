@@ -17,7 +17,7 @@ const getList = async () => {
     imageElement.className = 'group cursor-pointer relative';
     imageElement.innerHTML = `
       <div class="group cursor-pointer relative">
-        <img src="${item.url}" class="w-full h-80 object-cover rounded-lg transition-transform transform scale-100 group-hover:scale-105" />
+        <img data-src="${item.url}" src="https://images.100769.xyz/file/063671fc06e813f1da632.gif" class="lazyload w-full h-80 object-cover rounded-lg transition-transform transform scale-100 group-hover:scale-105" />
         <div class="absolute inset-0 transition duration-200 bg-gray-900 opacity-0 rounded-2xl group-hover:opacity-60"></div>
         <div class="absolute inset-0 flex flex-col items-center justify-center transition duration-200 opacity-0 group-hover:opacity-100">
           <div class="mb-2 shadow-sm w-33 rounded-2xl">

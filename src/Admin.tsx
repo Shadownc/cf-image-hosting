@@ -40,6 +40,7 @@ export const Admin = () => {
                     <p class="text-lg font-semibold"></p>
                 </div>
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.js" integrity="sha512-EC3CQ+2OkM+ZKsM1dbFAB6OGEPKRxi6EDRnZW9ys8LghQRAq6cXPUgXCCujmDrXdodGXX9bqaaCRtwj4h4wgSQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.1/lazysizes.min.js" integrity="sha512-bYhVDhvd1S5L7xVr2ADJcUeue6MKoOsNCzGBUlChGdjF0WWnd7eqGVu3DfLy3MFZIE9qPkfvcdJNeGHvWBcc+A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
                 <script src="/static/admin.js"></script>
             </body>
         </html>

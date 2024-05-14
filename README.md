@@ -33,6 +33,7 @@ npm run deploy
 - [x] Support compress image
 - [x] 图片审查
 - [x] 后台查看管理界面
+- [x] 后台图片懒加载
 
 ### 开启图片审查
 1. 请前往[moderatecontent](https://moderatecontent.com/)注册并获得一个免费的用于审查图像内容的 API key
@@ -67,6 +68,19 @@ $ npm run install && npm run deploy
   <summary>How to bind a domain name?</summary>
   Triggers -> Custom Domains -> Add a custom domain.
   <img src="https://images.mingming.dev/file/a7e19c9e0f169861fefa6.png" width="700" />
+</details>
+
+<details>
+  <summary>How to Deploy from Github Action?</summary>
+  Before deploying code to Cloudflare via CI, you need a cloudflare token. you can manager from here: <a href="https://dash.cloudflare.com/profile/api-tokens">api-tokens</a>
+  
+  If it's a newly created token, select the Edit Cloudflare Workers template, if you have already another token, make sure the token has the corresponding permissions(No, token permissions are not shared between cloudflare page and cloudflare worker).
+
+  then go to your Github repository settings dashboard: Settings->Secrets and variables->Actions->Repository secrets, and add a new secret with the name CLOUDFLARE_API_TOKEN.
+
+  如果是新创建的令牌，请选择编辑 Cloudflare Workers模板，如果您已有其他令牌，请确保该令牌具有相应的权限（否，令牌权限不会在 cloudflare 页面和 cloudflare Workers 之间共享）。
+  然后转到您的 Github 存储库设置仪表板：Settings->Secrets and variables->Actions->Repository secrets，并添加一个名为 的新密钥CLOUDFLARE_API_TOKEN。
+
 </details>
 
 ### License
