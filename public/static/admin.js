@@ -1,15 +1,18 @@
 var viewer = null;
+const filterEmptyUrls = (array) => {
+  return array.filter(item => item.url && item.url !== '');
+}
 const getList = async () => {
   const res = await fetch('/list');
   const data = await res.json();
- if(data.code==500){
-  location.href='/login'
-  return
- }
+  if (data.code == 500) {
+    location.href = '/login'
+    return
+  }
   const imageContainer = document.getElementById('image-container');
   imageContainer.innerHTML = '';
-
-  data.data.forEach(item => {
+  let list=filterEmptyUrls(data.data)
+  list.forEach(item => {
     const imageElement = document.createElement('div');
     imageElement.className = 'group cursor-pointer relative';
     imageElement.innerHTML = `
@@ -58,7 +61,7 @@ const getList = async () => {
   });
   delButtons.forEach(function (button) {
     button.addEventListener('click', function () {
-      let key=this.dataset.key
+      let key = this.dataset.key
       delItem(key)
     })
   })
@@ -66,9 +69,9 @@ const getList = async () => {
 const delItem = async (key) => {
   const res = await fetch(`/del/${key}`);
   const data = await res.json();
- if(data.code==200){
-  getList();
- }
+  if (data.code == 200) {
+    getList();
+  }
 }
 document.addEventListener('DOMContentLoaded', function () {
   getList();
