@@ -11,10 +11,11 @@ export const Admin = () => {
                 <title>IMself Images Admin</title>
                 <link href="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/tailwindcss/2.2.19/tailwind.min.css" type="text/css" rel="stylesheet" />
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.css" integrity="sha512-za6IYQz7tR0pzniM/EAkgjV1gf1kWMlVJHBHavKIvsNoUMKWU99ZHzvL6lIobjiE2yKDAKMDSSmcMAxoiWgoWA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <link rel="stylesheet" href="/static/admin.css" />
                 <link href="/favicon.ico" rel="icon" />
             </head>
 
-            <body>
+            <body class="admin-body">
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4" id="image-container">
                     {/* <div class="group cursor-pointer relative">
                         <img

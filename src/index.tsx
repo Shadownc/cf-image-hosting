@@ -1,9 +1,11 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import jwt from '@tsndr/cloudflare-worker-jwt'
+import { HTTPException } from 'hono/http-exception'
+import { getCookie, setCookie } from 'hono/cookie'
 import { Home } from "./Home";
 import { Admin } from "./Admin";
 import { Login } from "./Login";
+let IMselfCookie = null
 
 async function randomString(len) { //随机链接生成
   len = len || 6;
@@ -16,6 +18,15 @@ async function randomString(len) { //随机链接生成
   return result;
 }
 
+async function generateToken(length = 32) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let token = '';
+  for (let i = 0; i < length; i++) {
+    token += chars[Math.floor(Math.random() * chars.length)];
+  }
+  return token;
+}
+
 const app = new Hono<{ Bindings: { API_HOST: string, USERNAME: string, PASSWORD: string } }>();
 
 app.get("/", (c) => c.html(<Home />));
@@ -23,15 +34,21 @@ app.get("/admin", (c) => c.html(<Admin />));
 app.get("/login", (c) => c.html(<Login />));
 
 app.post("/login", async (c) => {
-  const body = await c.req.parseBody();
-  const username = body.get("username");
-  const password = body.get("password");
+  const body = await c.req.json();
+  const username = body.username
+  const password = body.password
 
   if (username === c.env.USERNAME && password === c.env.PASSWORD) {
-    // const token = await sign(payload, secret)
-    return c.json({ token });
+    IMselfCookie = await generateToken()
+    setCookie(c, 'login_cookie', IMselfCookie, {
+      maxAge: 86400,
+      path: '/',
+      secure: true,
+      httpOnly: true,
+    })
+    return c.json({ code: 200 }, 200);
   } else {
-    return c.html(<Login />);
+    throw new HTTPException(401, { message: '登录失败' })
   }
 });
 
@@ -47,9 +64,17 @@ app.post("/upload", cors(), async (c) => {
   const data = await response.json();
   const status = response.status as Parameters<typeof c.json>[1];
   let url = await randomString()
-  console.log(c.env);
-  await c.env.file_url.put(url, data[0].src);
-  return c.json(data, status);
+  console.log(`https://api.moderatecontent.com/moderate/?key=${c.env.ModerateContentApiKey}&url=${c.env.API_HOST + data[0].src}`);
+  const moderateContentResponse = await fetch(`https://api.moderatecontent.com/moderate/?key=${c.env.ModerateContentApiKey}&url=${c.env.API_HOST + data[0].src}`)
+  const moderateContentData = await moderateContentResponse.json()
+  console.log(moderateContentData);
+  if (moderateContentData.rating_index == 3) {
+    return c.json({ code: 500, message: '图片包含成人内容' }, status);
+  } else {
+    console.log(c.env);
+    await c.env.file_url.put(url, data[0].src);
+    return c.json(data, status);
+  }
 });
 
 app.get("/file/:name", async (c) => {
@@ -60,14 +85,18 @@ app.get("/file/:name", async (c) => {
 });
 
 app.get("/list", async (c) => {
-  console.log(c.env);
-  let data = [];
-  const value = await c.env.file_url.list();
-  for (const item of value.keys) {
-    const info = await c.env.file_url.get(item.name);
-    data.push({ key: item.name, url: info });
+  if (IMselfCookie && getCookie(c, 'login_cookie') == IMselfCookie) {
+    console.log(c.env);
+    let data = [];
+    const value = await c.env.file_url.list();
+    for (const item of value.keys) {
+      const info = await c.env.file_url.get(item.name);
+      data.push({ key: item.name, url: info });
+    }
+    return c.json({ code: 200, data }, 200);
+  } else {
+    throw new HTTPException(401, { message: '身份校验失败' })
   }
-  return c.json({ code: 200, data }, 200);
 });
 app.get("/del/:key", async (c) => {
   const value = await c.env.file_url.delete(c.req.param("key"));

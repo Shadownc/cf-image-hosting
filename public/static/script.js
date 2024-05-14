@@ -90,6 +90,13 @@ function handleUpload(file) {
         if (data && data.error) {
           throw new Error(data.error);
         }
+        if (data.code == 500) {
+          document.getElementsByClassName('u-error-alert')[0].style.display = 'block'
+          document.getElementById('u-error-text').innerText = data.message
+          document.querySelector(".upload-text").textContent = "重新上传";
+          document.querySelector(".spinner-grow").classList.add("d-none");
+          return
+        }
         const src = window.location.origin + data[0].src;
         uploadStatus.innerHTML = `
         <div class="alert alert-success text-center">Successful 🥳</div>
@@ -99,11 +106,10 @@ function handleUpload(file) {
             <button class="btn btn-outline-secondary copy-btn" type="button">Copy</button>
           </div>
         </div>
-        ${
-          file.type.startsWith("video")
+        ${file.type.startsWith("video")
             ? `<video src="${src}" class="img-fluid mb-3" controls></video>`
             : `<img src="${src}" class="img-fluid mb-3" alt="Uploaded Image">`
-        }
+          }
         `;
         document
           .querySelector(".copy-btn")
@@ -111,14 +117,17 @@ function handleUpload(file) {
       })
       .catch((error) => {
         uploadStatus.innerHTML = `
-        <div class="alert alert-danger">${
-          error || "Upload failed. Please try again."
-        }</div>
+        <div class="alert alert-danger">${error || "Upload failed. Please try again."
+          }</div>
         `;
       })
       .finally(() => {
-        document.querySelector(".upload-text").textContent = "Upload Again";
+        document.querySelector(".upload-text").textContent = "重新上传";
         document.querySelector(".spinner-grow").classList.add("d-none");
       });
   });
 }
+
+document.getElementById('u-error-close').addEventListener('click', function () {
+  document.getElementsByClassName('u-error-alert')[0].style.display = 'none'
+})

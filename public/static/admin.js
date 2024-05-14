@@ -2,6 +2,10 @@ var viewer = null;
 const getList = async () => {
   const res = await fetch('/list');
   const data = await res.json();
+ if(data.code==500){
+  location.href='/login'
+  return
+ }
   const imageContainer = document.getElementById('image-container');
   imageContainer.innerHTML = '';
 

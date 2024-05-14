@@ -15,7 +15,7 @@
 
 .container {
   max-width: 500px;
-  margin: 50px auto;
+  margin: 70px auto;
   padding: 20px;
 }
 
@@ -53,4 +53,20 @@
   margin-right: 10px;
   position: relative;
   top: -2px;
+}
+.github{
+  margin-top: 20px !important;
+  width: 80px;
+  margin: 0 auto;
+}
+.u-error-alert{
+  display: none;
+  position: fixed;
+  width: 40%;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.alert-dismissible .close{
+  outline: none !important;
 }

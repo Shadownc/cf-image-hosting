@@ -46,7 +46,7 @@ export function Home() {
               style="margin-top: 10px"
             ></div>
             <a
-              className="text-center text-muted"
+              className="text-center text-muted github"
               href="https://github.com/Shadownc/cf-image-hosting"
               target="_blank"
             >
@@ -54,7 +54,12 @@ export function Home() {
             </a>
           </div>
         </div>
-
+        <div class="alert alert-danger alert-dismissible fade show u-error-alert" role="alert">
+          <span id="u-error-text"></span>
+          <button type="button" id="u-error-close" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/browser-image-compression/2.0.2/browser-image-compression.min.js"></script>
         <script src="/static/script.js"></script>
       </body>
