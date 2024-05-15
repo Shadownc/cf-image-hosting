@@ -7,6 +7,7 @@ import { Home } from "./Home";
 import { Admin } from "./Admin";
 import { Login } from "./Login";
 let IMselfCookie = null
+let expiresTime = null
 
 async function randomString(len) { //随机链接生成
   len = len || 6;
@@ -42,7 +43,7 @@ app.post("/login", async (c) => {
   if (username === c.env.USERNAME && password === c.env.PASSWORD) {
     IMselfCookie = await generateToken()
     const now = new Date();
-    const expiresTime = new Date(now.getTime() + 10 * 60 * 60 * 1000);
+    expiresTime = new Date(now.getTime() + 10 * 60 * 60 * 1000);
     setCookie(c, 'login_cookie', IMselfCookie, {
       // maxAge: 86400,
       path: '/',
@@ -90,7 +91,8 @@ app.get("/file/:name", async (c) => {
 });
 
 app.get("/list", async (c) => {
-  if (IMselfCookie && getCookie(c, 'login_cookie') == IMselfCookie) {
+  const now = new Date();
+  if (IMselfCookie && getCookie(c, 'login_cookie') == IMselfCookie && expiresTime > new Date(now.getTime() + 8 * 60 * 60 * 1000)) {
     console.log(c.env);
     let data = [];
     const value = await c.env.file_url.list();
@@ -100,6 +102,7 @@ app.get("/list", async (c) => {
     }
     return c.json({ code: 200, data }, 200);
   } else {
+    deleteCookie(c, 'login_cookie')
     throw new HTTPException(401, { message: '身份校验失败' })
   }
 });
