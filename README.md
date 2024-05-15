@@ -50,6 +50,8 @@ PASSWORD：登录密码
 <img src="https://images.100769.xyz/file/8e6667617990c5dc7af16.png" width="700" />
 <img src="https://images.100769.xyz/file/edac66a9e1631dbd85283.png" width="700" />
 
+**本地开发调试请使用index_bak.tsx中的内容，因为本地使用jwt校验会报错`CryptoKey is not defined`,但是你也可以降低hono的版本到3.11.11，这个版本好像本地使用jwt也可行。**
+
 
 ### FAQ
 
