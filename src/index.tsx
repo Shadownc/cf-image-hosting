@@ -41,11 +41,15 @@ app.post("/login", async (c) => {
 
   if (username === c.env.USERNAME && password === c.env.PASSWORD) {
     IMselfCookie = await generateToken()
+    const now = new Date();
+    const expiresTime = new Date(now.getTime() + 10 * 60 * 60 * 1000);
     setCookie(c, 'login_cookie', IMselfCookie, {
-      maxAge: 86400,
+      // maxAge: 86400,
       path: '/',
       secure: true,
       httpOnly: true,
+      expires: expiresTime,
+      sameSite: 'Strict'
     })
     return c.json({ code: 200 }, 200);
   } else {
