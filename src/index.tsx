@@ -9,7 +9,7 @@ import { Login } from "./Login";
 const tokenPayload = {
   sub: 'login-token',
   role: 'admin',
-  exp: Math.floor(Date.now() / 1000) + 60 * 120, // Token expires in 2 hours
+  exp: Math.floor(Date.now() / 1000) + 60 * 600, // Token expires in 2 hours
 }
 const secret = 'IMyself'
 let IMyselfToken = null
