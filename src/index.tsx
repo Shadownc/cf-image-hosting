@@ -35,10 +35,10 @@ app.post("/login", async (c) => {
     const tokenPayload = {
       sub: 'login-token',
       role: 'admin',
-      exp: Math.floor(Date.now() / 1000) + 60 * 600, // Token expires in 2 hours
+      exp: Math.floor(Date.now() / 1000) + 20, // Token expires in 2 hours
     }
     IMyselfToken = await sign(tokenPayload, secret)
-    return c.json({ code: 200,exp: Math.floor(Date.now() / 1000) + 60 * 600 }, 200);
+    return c.json({ code: 200 }, 200);
   } else {
     throw new HTTPException(401, { message: '登录失败' })
   }
