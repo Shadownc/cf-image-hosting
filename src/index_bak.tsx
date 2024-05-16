@@ -1,4 +1,4 @@
-// 登录采用cookie版，设置了一天时间过期但是实际可能没有一天
+// 登录采用cookie版，过期时间是个迷
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { HTTPException } from 'hono/http-exception'

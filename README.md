@@ -50,7 +50,8 @@ PASSWORD：登录密码
 <img src="https://images.100769.xyz/file/8e6667617990c5dc7af16.png" width="700" />
 <img src="https://images.100769.xyz/file/edac66a9e1631dbd85283.png" width="700" />
 
-**index_bak.tsx中的内容是使用jwt校验登录，请降低hono的版本到3.11.11后使用。**
+**index_bak.tsx中的内容是使用cookie校验登录，本地开发调试建议使用index_bak.tsx中的内容进行，或者请降低hono的版本到3.11.11后开发调试。**
+**目前index.tsx必须部署以后才能正常生成token,本地想要正常使用请降低hono的版本到3.11.11或者在github的Codespaces中进行开发调试（二选一即可）**
 
 
 ### FAQ
