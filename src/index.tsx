@@ -1,13 +1,18 @@
-// 登录采用cookie版，设置了一天时间过期但是实际可能没有一天
+//使用jwt校验登录，请降低hono的版本到3.11.11后使用
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { HTTPException } from 'hono/http-exception'
-import { getCookie, setCookie } from 'hono/cookie'
+import { sign, verify } from 'hono/jwt'
 import { Home } from "./Home";
 import { Admin } from "./Admin";
 import { Login } from "./Login";
-let IMselfCookie = null
-let expiresTime = null
+const tokenPayload = {
+  sub: 'login-token',
+  role: 'admin',
+  exp: Math.floor(Date.now() / 1000) + 60 * 120, // Token expires in 2 hours
+}
+const secret = 'IMyself'
+let IMyselfToken = null
 
 async function randomString(len) { //随机链接生成
   len = len || 6;
@@ -18,15 +23,6 @@ async function randomString(len) { //随机链接生成
     result += $chars.charAt(Math.floor(Math.random() * maxPos));
   }
   return result;
-}
-
-async function generateToken(length = 32) {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let token = '';
-  for (let i = 0; i < length; i++) {
-    token += chars[Math.floor(Math.random() * chars.length)];
-  }
-  return token;
 }
 
 const app = new Hono<{ Bindings: { API_HOST: string, USERNAME: string, PASSWORD: string } }>();
@@ -41,17 +37,7 @@ app.post("/login", async (c) => {
   const password = body.password
 
   if (username === c.env.USERNAME && password === c.env.PASSWORD) {
-    IMselfCookie = await generateToken()
-    const now = new Date();
-    expiresTime = new Date(now.getTime() + 10 * 60 * 60 * 1000);
-    setCookie(c, 'login_cookie', IMselfCookie, {
-      // maxAge: 86400,
-      path: '/',
-      secure: true,
-      httpOnly: true,
-      expires: expiresTime,
-      sameSite: 'Strict'
-    })
+    IMyselfToken = await sign(tokenPayload, secret)
     return c.json({ code: 200 }, 200);
   } else {
     throw new HTTPException(401, { message: '登录失败' })
@@ -91,8 +77,8 @@ app.get("/file/:name", async (c) => {
 });
 
 app.get("/list", async (c) => {
-  const now = new Date();
-  if (IMselfCookie && getCookie(c, 'login_cookie') == IMselfCookie && expiresTime > new Date(now.getTime() + 8 * 60 * 60 * 1000)) {
+  const decodedPayload = await verify(IMyselfToken, secret)
+  if (IMyselfToken&&decodedPayload) {
     console.log(c.env);
     let data = [];
     const value = await c.env.file_url.list();
@@ -102,7 +88,6 @@ app.get("/list", async (c) => {
     }
     return c.json({ code: 200, data }, 200);
   } else {
-    deleteCookie(c, 'login_cookie')
     throw new HTTPException(401, { message: '身份校验失败' })
   }
 });
