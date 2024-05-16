@@ -31,10 +31,12 @@ app.post("/login", async (c) => {
   const password = body.password
 
   if (username === c.env.USERNAME && password === c.env.PASSWORD) {
+    const twoHoursInMilliseconds = 2 * 60 * 60 * 1000;
+    const exp = Math.floor(Date.now() / 1000) + twoHoursInMilliseconds / 1000;
     const tokenPayload = {
       sub: 'login-token',
       role: 'admin',
-      exp: Math.floor(Date.now() / 1000) + 60 * 120, // Token expires in 2 hours
+      exp
     }
     IMyselfToken = await sign(tokenPayload, c.env.LOGINSSECRET)
     return c.json({ code: 200 }, 200);
