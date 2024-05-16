@@ -6,7 +6,6 @@ import { sign, verify } from 'hono/jwt'
 import { Home } from "./Home";
 import { Admin } from "./Admin";
 import { Login } from "./Login";
-const secret = 'IMyself'
 let IMyselfToken = null
 
 async function randomString(len) { //随机链接生成
@@ -20,7 +19,7 @@ async function randomString(len) { //随机链接生成
   return result;
 }
 
-const app = new Hono<{ Bindings: { API_HOST: string, USERNAME: string, PASSWORD: string } }>();
+const app = new Hono<{ Bindings: { API_HOST: string, USERNAME: string, PASSWORD: string, LOGINSSECRET: string } }>();
 
 app.get("/", (c) => c.html(<Home />));
 app.get("/admin", (c) => c.html(<Admin />));
@@ -37,7 +36,7 @@ app.post("/login", async (c) => {
       role: 'admin',
       exp: Math.floor(Date.now() / 1000) + 60 * 120, // Token expires in 2 hours
     }
-    IMyselfToken = await sign(tokenPayload, secret)
+    IMyselfToken = await sign(tokenPayload, c.env.LOGINSSECRET)
     return c.json({ code: 200 }, 200);
   } else {
     throw new HTTPException(401, { message: '登录失败' })
@@ -77,8 +76,8 @@ app.get("/file/:name", async (c) => {
 });
 
 app.get("/list", async (c) => {
-  const decodedPayload = await verify(IMyselfToken, secret)
-  if (IMyselfToken&&decodedPayload) {
+  const decodedPayload = await verify(IMyselfToken, c.env.LOGINSSECRET)
+  if (IMyselfToken && decodedPayload) {
     console.log(c.env);
     let data = [];
     const value = await c.env.file_url.list();

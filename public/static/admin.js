@@ -10,8 +10,10 @@ const getList = async () => {
     return
   }
   const imageContainer = document.getElementById('image-container');
+  const loadingContainer = document.getElementById('admin-loading');
+  loadingContainer.style.display = 'none'
   imageContainer.innerHTML = '';
-  let list=filterEmptyUrls(data.data)
+  let list = filterEmptyUrls(data.data)
   list.forEach(item => {
     const imageElement = document.createElement('div');
     imageElement.className = 'group cursor-pointer relative';

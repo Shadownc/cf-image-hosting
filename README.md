@@ -43,11 +43,13 @@ npm run deploy
 
 ### 配置登录用户
 1. 打开 Cloudflare Workers 和 Pages 的管理页面，找到你发布的cf-image-hosting 依次点击设置，环境变量，添加环境变量
-> USERNAME：登录用户名  
-PASSWORD：登录密码
+    > USERNAME：登录用户名  
+    PASSWORD：登录密码  
+    LOGINSSECRET：tokenKey
 2. 更改完进行重新部署
 3. 访问域名+/admin就可进入管理界面（未登录会直接跳转到登录页，登录后会自动跳转到admin界面）
 <img src="https://images.100769.xyz/file/8e6667617990c5dc7af16.png" width="700" />
+<img src="https://images.100769.xyz/file/e81b38d95268439624457.png" width="700" />
 <img src="https://images.100769.xyz/file/edac66a9e1631dbd85283.png" width="700" />
 
 **index_bak.tsx中的内容是使用cookie校验登录，本地开发调试建议使用index_bak.tsx中的内容进行，或者请降低hono的版本到3.11.11后开发调试。**  
