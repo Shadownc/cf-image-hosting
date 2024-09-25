@@ -13,7 +13,7 @@ Free unlimited image hosting on Telegraph, deployed on Cloudflare.
 
 ### Screenshots
 
-<img src="https://images.100769.xyz/file/7ebc4b5e4d57c5d315a9f.png" width="700" />
+<img src="https://images.100769.xyz/file/xT5tyc" width="700" />
 
 ### Development
 
