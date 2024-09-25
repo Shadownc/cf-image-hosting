@@ -43,7 +43,7 @@ const getList = async () => {
   const delButtons = document.querySelectorAll('.c-del');
   copyButtons.forEach(function (button) {
     button.addEventListener('click', function () {
-      const url = location.origin + this.dataset.url;
+      const url = this.dataset.url;
       console.log(url);
       copyToClipboard(url);
     });
