@@ -97,7 +97,7 @@ function handleUpload(file) {
           document.querySelector(".spinner-grow").classList.add("d-none");
           return
         }
-        const src = window.location.origin + data[0].src;
+        const src = data.url;
         uploadStatus.innerHTML = `
         <div class="alert alert-success text-center">Successful 🥳</div>
         <div class="input-group" style="margin-bottom: 10px">
