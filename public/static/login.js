@@ -16,6 +16,9 @@ async function fetchLogin() {
         const data = await response.json();
         console.log(data);
         if (data.code == 200) {
+            if (data.data?.token) {
+                localStorage.setItem('token', data.data.token);
+            }
             location.href = '/admin'
         } else {
             // 登录失败的处理逻辑
@@ -27,10 +30,9 @@ async function fetchLogin() {
     }
 }
 
-
 const pwdInput = document.getElementById('password');
 pwdInput.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') {
-    fetchLogin()
-  }
+    if (event.key === 'Enter') {
+        fetchLogin()
+    }
 });
