@@ -38,6 +38,7 @@ export function Home() {
                 type="file"
                 name="file"
                 accept="image/*, video/*"
+                multiple
               />
             </button>
             <div

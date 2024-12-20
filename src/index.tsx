@@ -104,7 +104,7 @@ app.post("/login", async (c) => {
 // 需要验证的接口使用 authMiddleware
 app.use("/admin/*", authMiddleware);
 app.use("/update/*", authMiddleware);
-app.use("/upload", authMiddleware);
+// app.use("/upload", authMiddleware);
 
 // 可选：添加刷新令牌接口
 app.post("/refresh-token", authMiddleware, async (c) => {

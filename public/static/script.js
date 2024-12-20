@@ -7,8 +7,10 @@ fullWindow.addEventListener("drop", onFileDrop);
 fileInput.addEventListener("change", onFileChange);
 
 function onFileChange() {
-  const file = fileInput.files[0];
-  if (file) handleUpload(file);
+  const files = fileInput.files;
+  for (let i = 0; i < files.length; i++) {
+    handleUpload(files[i]);
+  }
 }
 
 function onFileDrop(event) {
@@ -98,10 +100,13 @@ function handleUpload(file) {
           return
         }
         const src = data.url;
-        uploadStatus.innerHTML = `
+        
+        // Create new element for this upload result
+        const resultDiv = document.createElement('div');
+        resultDiv.innerHTML = `
         <div class="alert alert-success text-center">Successful 🥳</div>
         <div class="input-group" style="margin-bottom: 10px">
-          <input type="text" class="form-control" id="imageUrl" value="${src}">
+          <input type="text" class="form-control" value="${src}">
           <div class="input-group-append">
             <button class="btn btn-outline-secondary copy-btn" type="button">Copy</button>
           </div>
@@ -111,9 +116,21 @@ function handleUpload(file) {
             : `<img src="${src}" class="img-fluid mb-3" alt="Uploaded Image">`
           }
         `;
-        document
-          .querySelector(".copy-btn")
-          .addEventListener("click", onFileUrlCopy);
+        
+        // Add the new result to uploadStatus
+        uploadStatus.appendChild(resultDiv);
+        
+        // Add copy button listener
+        resultDiv.querySelector(".copy-btn").addEventListener("click", function() {
+          const url = this.parentElement.previousElementSibling.value;
+          navigator.clipboard.writeText(url)
+            .then(() => {
+              this.textContent = "Copied ✨";
+              setTimeout(() => {
+                this.textContent = "Copy";
+              }, 1000);
+            });
+        });
       })
       .catch((error) => {
         uploadStatus.innerHTML = `
