@@ -47,7 +47,7 @@ npm run deploy
     > USERNAME：登录用户名  
     PASSWORD：登录密码  
     LOGINSSECRET：tokenKey
-2. 更改完进行重新部署
+2. 更改完进行重新部署（或者先添加变量应该也可以）
 3. 访问域名+/admin就可进入管理界面（未登录会直接跳转到登录页，登录后会自动跳转到admin界面）
 <img src="https://images.100769.xyz/file/tJBM7x" width="700" />
 <img src="https://images.100769.xyz/file/kRYBCz" width="700" />
