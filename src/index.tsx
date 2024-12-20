@@ -240,7 +240,7 @@ app.get("/list", authMiddleware, async (c) => {
     }
     return c.json({ code: 200, data }, 200);
   } catch (error) {
-    throw new HTTPException(500, { message: '获取列表失败' });
+    throw error;
   }
 });
 
@@ -286,9 +286,16 @@ app.post("/update/:key", cors(), async (c) => {
 });
 
 app.onError((error, c) => {
+  if (error instanceof HTTPException) {
+    return c.json(
+      { code: error.status, message: error.message },
+      error.status
+    );
+  }
+  
   return c.json(
     { code: 500, message: error?.message || "Server internal error" },
-    500,
+    500
   );
 });
 
