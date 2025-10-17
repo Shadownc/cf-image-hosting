@@ -9,7 +9,7 @@ export const Login = () => {
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
         />
         <title>IMself Images Admin</title>
-        <link href="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/tailwindcss/2.2.19/tailwind.min.css" type="text/css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" type="text/css" rel="stylesheet" />
         <link href="/favicon.ico" rel="icon" />
       </head>
 
